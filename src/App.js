@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
+import Test1 from './components/Organisms/Test1'
+import Test2 from './components/Organisms/Test2'
+import Navbar from './components/Atoms/Navbar'
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+          <div>
+            <Navbar />
+            <Switch>
+              <Route path="/test1">
+                <Test1 />
+              </Route>
+              <Route path="/test2">
+                <Test2 />
+              </Route>
+              <Route path="/">
+                <Test1 />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+        <div className="arena-liveblog" data-publisher="creative" data-event="yisx" data-version="2"></div>
     </div>
   );
 }
-
 export default App;

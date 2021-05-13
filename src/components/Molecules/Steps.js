@@ -34,9 +34,9 @@ function Steps(props) {
       <div className="steps">
         {props.steps.map((step, index) => {
           return (
-            <div className="step">
+            <div className="step" key={index}>
               <div className={step.checked ? 'circle-complete' : 'circle'} />
-              <div className="step-text" key={index} style={{color: step.checked ? 'green' : ''}}>{step.title}</div>
+              <div className="step-text" style={{color: step.checked ? 'green' : ''}}>{step.title}</div>
             </div>
           )
         })}

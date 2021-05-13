@@ -32,15 +32,9 @@ function Test1() {
   ]
   
   const [steps, setSteps] = useState(stepsConstructor)
-  const [firstAccess, setFirstAccess] = useState(true)
   const [isLogin, setIsLogin] = useState(true)
 
-  if (window.arenaSSO) { 
-    if(firstAccess) {
-      LoginFromPublisher()
-      setFirstAccess(false)
-    }
-
+  if (window.arenaSSO) {
     startArenaSSO(
       {
         onSignin: () => LoginWidget(),
@@ -50,9 +44,19 @@ function Test1() {
   } else { 
     document.addEventListener(
     'arena-im-api-ready', 
-    startArenaSSO, 
+    start, 
     false
     ); 
+  }
+  
+  function start() {
+    LogoutFromPublisher()
+    startArenaSSO(
+      {
+        onSignin: () => LoginWidget(),
+        onSignout: () => LogoutWidget(),
+      }
+    )
   }
 
   function LoginWidget() {

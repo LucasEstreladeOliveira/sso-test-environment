@@ -35,7 +35,7 @@ function Test2() {
   const [isLogin, setIsLogin] = useState(false)
 
   if (window.arenaSSO) { 
-    start();
+    LoginFromPublisher();
   } else { 
     document.addEventListener(
     'arena-im-api-ready', 
@@ -45,12 +45,10 @@ function Test2() {
   }
 
   function start() {
-    LoginFromPublisher()
     startArenaSSO(
-      {
-        onSignin: () => LoginWidget(),
-        onSignout: () => LogoutWidget(),
-      }
+      LoginWidget,
+      LogoutWidget,
+      true,
     )
   }
 

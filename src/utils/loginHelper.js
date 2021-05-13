@@ -11,7 +11,7 @@ export function LogoutFromPublisher() {
   window.arenaSSO.signOut();
 }
 
-export function startArenaSSO({onSignin, onSignout}) {
+export function startArenaSSO(onSignin, onSignout, isLogin) {
   window.arenaSSO.initialize({ 
     // Called when the user clicks on sign in in an Arena Widget 
     signIn: () => { 
@@ -24,6 +24,15 @@ export function startArenaSSO({onSignin, onSignout}) {
       onSignout();
      },
   }); 
+  
+  if(isLogin) {
+    window.arenaSSO.authenticate({
+      id: "2345",
+      email: "kristin.mckinney@example.com",
+      picture: "https://randomuser.me/api/portraits/women/12.jpg",
+      name: "Kristin Mckinney",
+    });
+  }
 }
 
 const loginHelper = { LoginFromPublisher, LogoutFromPublisher, startArenaSSO }

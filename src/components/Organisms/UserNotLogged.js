@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LogoutFromPublisher, LoginFromPublisher, startArenaSSO } from '../../utils/loginHelper.js'
 import LoginLogoutButton from '../Atoms/LoginLogoutButton'
 import Steps from '../Molecules/Steps'
@@ -33,19 +33,26 @@ function Test1() {
   
   const [steps, setSteps] = useState(stepsConstructor)
   const [isLogin, setIsLogin] = useState(true)
+  const [doneLoading, setDoneLoading] = useState(false)
 
-  if (window.arenaSSO) {
-    LogoutFromPublisher();
-  } else { 
-    document.addEventListener(
-    'arena-im-api-ready', 
-    start, 
-    false
-    ); 
-  }
+  useEffect(() => {
+    if(!doneLoading) {
+      if (window.arenaSSO) {
+        LogoutFromPublisher();
+        setDoneLoading(true)
+      } else { 
+        document.addEventListener(
+        'arena-im-api-ready', 
+        start, 
+        false
+        ); 
+      }
+    }
+  }, [window.arenaSSO, doneLoading]);
   
   function start() {
     startArenaSSO(LoginWidget, LogoutWidget, false)
+    setDoneLoading(true)
   }
 
   function LoginWidget() {

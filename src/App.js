@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
-import Test1 from './components/Organisms/Test1'
-import Test2 from './components/Organisms/Test2'
+import UserNotLogged from './components/Organisms/UserNotLogged'
+import UserLogged from './components/Organisms/UserLogged'
 import Navbar from './components/Atoms/Navbar'
 
 function App() {
@@ -11,14 +11,14 @@ function App() {
           <div>
             <Navbar />
             <Switch>
-              <Route path="/test1">
-                <Test1 />
+              <Route path="/user-not-logged">
+                <UserNotLogged />
               </Route>
-              <Route path="/test2">
-                <Test2 />
+              <Route path="/user-logged">
+                <UserLogged />
               </Route>
               <Route path="/">
-                <Test1 />
+                <UserNotLogged />
               </Route>
             </Switch>
           </div>

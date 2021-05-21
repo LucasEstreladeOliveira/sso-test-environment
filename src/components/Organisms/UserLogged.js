@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LogoutFromPublisher, LoginFromPublisher, startArenaSSO } from '../../utils/loginHelper.js'
 import LoginLogoutButton from '../Atoms/LoginLogoutButton'
 import Steps from '../Molecules/Steps'
@@ -30,26 +30,29 @@ function Test2() {
       checked: false,
     },
   ]
-  
+
   const [steps, setSteps] = useState(stepsConstructor)
   const [isLogin, setIsLogin] = useState(false)
+  const [doneLoading, setDoneLoading] = useState(false)
 
-  if (window.arenaSSO) { 
-    LoginFromPublisher();
-  } else { 
-    document.addEventListener(
-    'arena-im-api-ready', 
-    start, 
-    false
-    ); 
-  }
-
+  useEffect(() => {
+    if(!doneLoading) {
+      if (window.arenaSSO) { 
+        LoginFromPublisher();
+        setDoneLoading(true)
+      } else { 
+        document.addEventListener(
+        'arena-im-api-ready', 
+        start, 
+        false
+        ); 
+      }
+    }
+  }, [window.arenaSSO, doneLoading]);
+  
   function start() {
-    startArenaSSO(
-      LoginWidget,
-      LogoutWidget,
-      true,
-    )
+    startArenaSSO(LoginWidget, LogoutWidget, true)
+    setDoneLoading(true)
   }
 
   function LoginWidget() {
@@ -61,7 +64,16 @@ function Test2() {
     }))
     setIsLogin(false)
   }
-  
+
+  function LogoutWidget() {
+    setSteps(steps.map(step => {
+      if(step.id === 2){
+        step.checked = true;
+      }
+      return step
+    }))
+    setIsLogin(true)
+  }
   
   function LoginPublisher() {
     LoginFromPublisher();
@@ -72,16 +84,6 @@ function Test2() {
       return step
     }))
     setIsLogin(false)
-  }
-  
-  function LogoutWidget() {
-    setSteps(steps.map(step => {
-      if(step.id === 2){
-        step.checked = true;
-      }
-      return step
-    }))
-    setIsLogin(true)
   }
   
   function LogoutPublisher() {

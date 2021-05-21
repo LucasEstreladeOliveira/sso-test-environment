@@ -20,8 +20,8 @@ function Navbar() {
 
   return (
     <StyledNavbar>
-      <Link to="/test1">User não logado</Link>
-      <Link to="/test2">User logado</Link>
+      <Link to="/user-not-logged">User não logado</Link>
+      <Link to="/user-logged">User logado</Link>
     </StyledNavbar>
   );
 }
